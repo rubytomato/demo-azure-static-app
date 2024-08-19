@@ -6,6 +6,14 @@
 </head>
 <body>
     <div>
+        <div>
+            <p>サインイン</p>
+            <a href="/.auth/login/aad">サインイン</a>
+            <p>サインアウト</p>
+            <a href="/.auth/logout">サインアウト</a>
+        </div>
+    </div>
+    <div>
         <h1>Azureの静的WebアプリケーションにEntra IDを利用したユーザ認証を追加する</h1>
         <div>
             <h2>手順1</h2>
@@ -14,6 +22,28 @@
         <div>
             <h2>手順2</h2>
             <p>Azure上に静的Webアプリケーションのプロジェクトを作成する</p>
+            <p>手順1で用意したリポジトリをソースに指定する</p>
+            <div>
+                <h3>デフォルトで認証機能が有効になっている</h3>
+                <p>Azure ADの場合</p>
+                <code>
+                    /.auth/login/aad
+                </code>
+            </div>
+        </div>
+        <div>
+            <h2>手順3</h2>
+            <p>認証に使用する特定のAzure ADテナントを作成する</p>
+            <p>テナントの種類にAzure AD B2Cを選択する</p>
+            <div>
+                <h3>テナントにユーザを追加する</h3>
+                <p>ユーザプリンシパル名</p>
+                <p>demouser001</p>
+            </div>
+        </div>
+        <div>
+            <h2>手順4</h2>
+            <p>Azure ADテナントに作成した静的Webアプリケーションを登録する</p>
         </div>
     </div>
 </body>
