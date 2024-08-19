@@ -21,7 +21,7 @@
   "responseOverrides": {
     "401": {
       "statusCode": 302,
-      "redirect": "/.auth/login/add"
+      "redirect": "/.auth/login/aad"
     }
   }
 }
