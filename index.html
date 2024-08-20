@@ -7,6 +7,7 @@
 <body>
     <div>
         <p><a href="/">top</a></p>
+        <p><a href="/.auth/me">me</a></p>
         <p><a href="/.auth/login/aad">サインイン</a></p>
         <p><a href="/.auth/logout">サインアウト</a></p>
     </div>
@@ -19,12 +20,19 @@
         <div>
             <h2>手順2</h2>
             <p>Azure上に静的Webアプリケーションのプロジェクトを作成する</p>
+            <p>静的Webアプリ名を入力する</p>
+            <p>プランの種類にstandardを選択する</p>
             <p>手順1で用意したリポジトリをソースに指定する</p>
+            <p>作成を開始するとGitHub Actions workflowが実行されデプロイが始まる</p>
             <div>
                 <h3>デフォルトで認証機能が有効になっている</h3>
-                <p>Azure ADの場合</p>
+                <p>Azure ADの場合にアクセスするとサインイン画面にリダイレクトする</p>
                 <code>
-                    /.auth/login/aad
+                    https://<YOUR_SITE>/.auth/login/aad
+                </code>
+                <p>ログインしたユーザの情報</p>
+                <code>
+                    https://<YOUR_SITE>/.auth/me
                 </code>
             </div>
         </div>
@@ -32,15 +40,64 @@
             <h2>手順3</h2>
             <p>認証に使用する特定のAzure ADテナントを作成する</p>
             <p>テナントの種類にAzure AD B2Cを選択する</p>
+            <p>組織名に”B2Cデモテナント”を入力する</p>
+            <p>ドメインに"demotenant"を入力する</p>
             <div>
                 <h3>テナントにユーザを追加する</h3>
                 <p>ユーザプリンシパル名</p>
-                <p>demouser001</p>
+                <p>demouser002</p>
             </div>
         </div>
         <div>
             <h2>手順4</h2>
             <p>Azure ADテナントに作成した静的Webアプリケーションを登録する</p>
+            <p>アプリケーション名を入力する</p>
+            <p>サポートされているアカウントの種類に"この組織ディレクトリのみに含まれるアカウント"を選択する</p>
+            <p>いったん登録する</p>
+            <p>登録したアプリケーションを開き認証メニューからプラットフォームの構成を行う</p>
+            <p>プラットフォームに"web"を選択する</p>
+            <p>リダイレクトURIを入力する</p>
+            <p>フロントチャネルのログアウト URLを入力する</p>
+            <p>暗黙的な許可およびハイブリッド フローに"IDトークン"を選択する</p>
+        </div>
+        <div>
+            <h2>手順5</h2>
+            <p>証明書とシークレットを登録する</p>
+            <p>新しいクライアントシークレットをクリックする</p>
+            <p>値とシークレットIDを控える</p>
+        </div>
+        <div>
+            <h2>手順6</h2>
+            <p>テナントに登録した静的Webアプリの概要画面を開く</p>
+            <p>アプリケーション(クライアント)IDを控える</p>
+            <p>ディレクトリ(テナント)IDを控える</p>
+        </div>
+        <div>
+            <h2>手順7</h2>
+            <p>作成した静的Webアプリの環境変数画面を開く</p>
+            <p>環境変数AZURE_CLIENT_IDに、アプリケーション(クライアント)IDを登録</p>
+            <p>環境変数AZURE_CLIENT_SECRET_APP_SETTING_NAMEに、シークレットIDを登録</p>
+        </div>
+        <div>
+            <h2>手順8</h2>
+            <p>静的Webアプリのプロジェクトに `staticwebapp.config.json` を追加する </p>
+            <p>アプリ全体に認証をかける設定</p>
+            <code>
+                {
+                  "routes": [
+                    {
+                      "route": "/*",
+                      "allowedRoles": ["authenticated"]
+                    }
+                  ],
+                  "responseOverrides": {
+                    "401": {
+                      "statusCode": 302,
+                      "redirect": "/.auth/login/aad"
+                    }
+                  }
+                }
+            </code>
         </div>
     </div>
 </body>

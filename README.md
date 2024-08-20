@@ -8,6 +8,8 @@ https://learn.microsoft.com/ja-jp/azure/static-web-apps/overview
 
 https://learn.microsoft.com/ja-jp/azure/static-web-apps/configuration
 
+ファイル名: `staticwebapp.config.json`
+
 #### アプリケーション全体へのアクセスを制限する
 
 ```json
