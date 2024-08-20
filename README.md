@@ -71,6 +71,10 @@ https://<YOUR_SITE>/.auth/logout/aad/callback
 /.auth/me
 ```
 
+
+```text
+https://<YOUR_SITE>/.auth/complete
+```
 ## azure entra id
 
 https://learn.microsoft.com/ja-jp/azure/static-web-apps/authentication-authorization
