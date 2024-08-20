@@ -12,40 +12,39 @@
         <p><a href="/.auth/logout">サインアウト</a></p>
     </div>
     <div>
-        <h1>Azureの静的WebアプリケーションにEntra IDを利用したユーザ認証を追加する</h1>
+        <h1>Azureの静的WebアプリケーションにEntra IDを利用したユーザ認証を追加するデモ</h1>
         <div>
             <h2>手順1</h2>
-            <p>静的Webアプリケーションのリポジトリを用意する</p>
+            <p>静的WebアプリケーションのGitHubリポジトリを用意する</p>
         </div>
         <div>
             <h2>手順2</h2>
-            <p>Azure上に静的Webアプリケーションのプロジェクトを作成する</p>
+            <p>Azureに静的Webアプリケーションのプロジェクトを作成する</p>
             <p>静的Webアプリ名を入力する</p>
-            <p>プランの種類にstandardを選択する</p>
+            <p>プランの種類に `standard` を選択する</p>
             <p>手順1で用意したリポジトリをソースに指定する</p>
             <p>作成を開始するとGitHub Actions workflowが実行されデプロイが始まる</p>
             <div>
                 <h3>デフォルトで認証機能が有効になっている</h3>
-                <p>Azure ADの場合にアクセスするとサインイン画面にリダイレクトする</p>
+                <p>Azure ADの場合、下記のURLにアクセスするとサインイン画面にリダイレクトする</p>
                 <code>
-                    https://<YOUR_SITE>/.auth/login/aad
+                    https://{YOUR_SITE}/.auth/login/aad
                 </code>
                 <p>ログインしたユーザの情報</p>
                 <code>
-                    https://<YOUR_SITE>/.auth/me
+                    https://{YOUR_SITE}/.auth/me
                 </code>
             </div>
         </div>
         <div>
             <h2>手順3</h2>
-            <p>認証に使用する特定のAzure ADテナントを作成する</p>
-            <p>テナントの種類にAzure AD B2Cを選択する</p>
+            <p>認証に使用するAzure AD BC2 テナントを作成する</p>
+            <p>テナントの種類に `Azure AD B2C` を選択する</p>
             <p>組織名に”B2Cデモテナント”を入力する</p>
             <p>ドメインに"demotenant"を入力する</p>
             <div>
                 <h3>テナントにユーザを追加する</h3>
-                <p>ユーザプリンシパル名</p>
-                <p>demouser002</p>
+                <p>ユーザプリンシパル名に `demouser002` を入力する</p>
             </div>
         </div>
         <div>
@@ -57,47 +56,55 @@
             <p>登録したアプリケーションを開き認証メニューからプラットフォームの構成を行う</p>
             <p>プラットフォームに"web"を選択する</p>
             <p>リダイレクトURIを入力する</p>
+            <code>
+                https://{YOUR_SITE}/.auth/login/aad/callback
+            </code>
             <p>フロントチャネルのログアウト URLを入力する</p>
-            <p>暗黙的な許可およびハイブリッド フローに"IDトークン"を選択する</p>
+            <code>
+                https://{YOUR_SITE}/.auth/logout/aad/callback
+            </code>
+            <p>暗黙的な許可およびハイブリッド フローに "IDトークン" を選択する</p>
         </div>
         <div>
             <h2>手順5</h2>
             <p>証明書とシークレットを登録する</p>
             <p>新しいクライアントシークレットをクリックする</p>
-            <p>値とシークレットIDを控える</p>
+            <p>"値" と "シークレットID" を控える</p>
         </div>
         <div>
             <h2>手順6</h2>
             <p>テナントに登録した静的Webアプリの概要画面を開く</p>
-            <p>アプリケーション(クライアント)IDを控える</p>
-            <p>ディレクトリ(テナント)IDを控える</p>
+            <p>"アプリケーション(クライアント)ID" を控える</p>
+            <p>"ディレクトリ(テナント)ID" を控える</p>
         </div>
         <div>
             <h2>手順7</h2>
             <p>作成した静的Webアプリの環境変数画面を開く</p>
-            <p>環境変数AZURE_CLIENT_IDに、アプリケーション(クライアント)IDを登録</p>
-            <p>環境変数AZURE_CLIENT_SECRET_APP_SETTING_NAMEに、シークレットIDを登録</p>
+            <p>環境変数 "AZURE_CLIENT_ID" に、"アプリケーション(クライアント)ID" を登録</p>
+            <p>環境変数 "AZURE_CLIENT_SECRET_APP_SETTING_NAME" に、"シークレットID" を登録</p>
         </div>
         <div>
             <h2>手順8</h2>
             <p>静的Webアプリのプロジェクトに `staticwebapp.config.json` を追加する </p>
             <p>アプリ全体に認証をかける設定</p>
-            <code>
-                {
-                  "routes": [
-                    {
-                      "route": "/*",
-                      "allowedRoles": ["authenticated"]
-                    }
-                  ],
-                  "responseOverrides": {
-                    "401": {
-                      "statusCode": 302,
-                      "redirect": "/.auth/login/aad"
-                    }
-                  }
-                }
-            </code>
+            <pre>
+<code>
+{
+    "routes": [
+        {
+            "route": "/*",
+            "allowedRoles": ["authenticated"]
+        }
+    ],
+    "responseOverrides": {
+        "401": {
+            "statusCode": 302,
+            "redirect": "/.auth/login/aad"
+        }
+    }
+}
+</code>
+            </pre>
         </div>
     </div>
 </body>
