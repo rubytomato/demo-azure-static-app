@@ -31,6 +31,25 @@ https://learn.microsoft.com/ja-jp/azure/static-web-apps/configuration
 
 #### Azure Static Web Apps でのカスタム認証
 
+バージョン 1
+
+```json
+{
+  "auth": {
+    "identityProviders": {
+      "azureActiveDirectory": {
+        "userDetailsClaim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+        "registration": {
+          "openIdIssuer": "https://login.microsoftonline.com/<TENANT_ID>",
+          "clientIdSettingName": "AZURE_CLIENT_ID",
+          "clientSecretSettingName": "AZURE_CLIENT_SECRET_APP_SETTING_NAME"
+        }
+      }
+    }
+  }
+}
+```
+
 Microsoft Entra バージョン 2
 
 ```json
